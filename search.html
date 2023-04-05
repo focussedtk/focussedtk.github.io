@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Focussed: Search</title>
+	<link rel="stylesheet" href="/mystyle.css">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<script src="/js/scale.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<div class="main">
+		
+			<center>
+				<table>
+						<td width="365px">
+						</td>
+						<td width="700px">
+							<a href="/"><img src="logo.png" style="width:700px"></a>
+						</td>
+						<td width="350px">
+							<br><br><br>
+							<form action="/search.html">
+								&nbsp;<input name="q" size="20px" placeholder="Search...">
+								<input id="find" type="submit" value="🔍︎">
+							</form>
+						</td>
+					</tr>
+				</table>
+				<br>
+				<div id="header">
+					<a href="/" id="_celebs">CELEBS</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="/hollywood" id="_hollywood">HOLLYWOOD</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="/music" id="_music">MUSIC</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="/rappers" id="_rappers">RAPPERS</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="/sports" id="_sports">SPORTS</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="/tikTok" id="_tikTok">TIKTOK</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="/youtubers" id="_youtubers">YOUTUBERS</a>
+				</div>
+			</center>
+			<br>
+			
+			<div id="content">
+			</div>
+			<center>
+				<div id="footer">
+					<h1><center>&nbsp;&nbsp;focussed.tk™</center></h1>
+					<a href="/about" id="f0" style="color:#00FFA9">About</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="javascript:void(0);" id="f0" style="color:#00FFA9">Contact</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="javascript:void(0);" id="f0" style="color:#00FFA9">Terms of Use</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+					<a href="javascript:void(0);" id="f0" style="color:#00FFA9">Help</a>
+					<br><br>
+					Powered by: www.000webhost.com<br>
+				</div>
+			</center>
+		</div>
+	</div>
+</body>
+<script>
+var allFiles;
+var numFiles = 0;
+var thumbnailUrls = [];
+var embedUrls = []; 
+var articlesLength = 0;
+var previousPage;
+var articlesDislayed = 0;
+function readTextFile(file)
+{
+	var data;
+	fetch(file)
+		.then(response => response.text())
+		.then(data => updateFile(data));
+		
+	return data;
+}
+function updateFile(data)
+{
+	allFiles+=data;
+	numFiles++;
+	if(numFiles == 7){
+		thumbnailUrls = [];
+		embedUrls = []; 
+		articlesLength = 0;
+		renderPage()
+	}
+}
+function renderPage()
+{
+	console.log(allFiles)
+	document.getElementById("content").innerHTML ="";
+	var articles = allFiles.split('\n');
+	articlesLength = articles.length;
+	var queries= window.location.search.split("?q=")[1].split("+");
+	for(var articleNum = 1 ; articleNum < articles.length; articleNum++)
+	{
+		var numPositive = 0;
+		for(var queryI =0; queryI<queries.length;queryI++)
+			if(articles[articleNum].toLowerCase().includes(queries[queryI].toLowerCase()))
+			{
+				numPositive++;
+				if(numPositive==queries.length)
+				{
+					var article = articles[articleNum].split(",");
+					var title = article[1];
+					var url = article[2];
+					var imgUrl = url.replace("https://www.youtube.com/watch?v=","https://i3.ytimg.com/vi/");
+					var embedUrl = url.replace("watch?v=","embed/");
+					thumbnailUrls[articleNum] = imgUrl;
+					imgUrl+="/maxresdefault.jpg";
+					var images = article[3];
+					var text = article[4];
+					embedUrls[articleNum] = '<iframe width="940" height="528" src="'+embedUrl+'?&autoplay=1"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+					var a = `<br><table>
+							<tr>
+								<td>
+									<div class="shadowElement">
+										<img id="i`+articleNum+`" src="`+imgUrl+`" width="940" height="528" onclick="javascript:play(this.parentElement,`+articleNum+`)"onload = "checkImage(event,`+articleNum+`)">
+										<img id="play" src="playButton.png"/>
+									</div>
+								</td>
+								<td width="2"></td>
+								<td>
+									<div class="textColumn">
+										<!--<h1 onclick="javascript:play(this.parentElement.previousElementSibling.previousElementSibling  ,`+articleNum+`)">`+title+`</h1>-->
+										<h1>`+title+`</h1>
+										`+text+`
+									</div>
+								</td>
+							</tr>
+						</table>
+						<br><br>
+						<div class="scrollingWindow">`;
+					for(var i = 1; i <= images.split("-")[1] ;i++)
+						a += `<img width="200" height="200" src="i/`+images.split("-")[0]+`-`+i+`.jpg"/>`;
+					a+=`</div>
+						<br><br>`;
+					document.getElementById("content").innerHTML += a;
+					articlesDislayed++
+					break;
+				}
+			}
+	}
+}
+
+function checkImage(event,aN)
+{
+	if(document.getElementById("i"+aN)!=null && document.getElementById("i"+aN).naturalWidth<300)
+	{
+		document.getElementById("i"+aN).src = thumbnailUrls[aN]+'/sddefault.jpg';
+		document.getElementById("i"+aN).style = 'height: 528px;  object-fit: cover; ';
+	}
+}
+readTextFile('celebs.csv')
+readTextFile('hollywood.csv')
+readTextFile('music.csv')
+readTextFile('rappers.csv')
+readTextFile('tiktok.csv')
+readTextFile('sports.csv')
+readTextFile('youtubers.csv')
+function play(element,id)
+{
+	element.innerHTML=embedUrls[id];
+}
+</script>
+</html>
+

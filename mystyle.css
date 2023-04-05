@@ -1,0 +1,106 @@
+body
+{
+	font-size: large;	
+	font-family: Helvetica, sans-serif;
+	text-align:center;
+	background-color: #84FFF9;
+	color: #000;
+	margin: 0;
+}
+.shadowElement
+{
+	width: 940px;
+	height: 528px;
+	box-shadow: 10px 10px #888888;
+	background-color: #000000;
+}
+.shadowElement:hover {
+	cursor: pointer;
+}
+#header
+{	
+	color: #fd95ff;
+}
+#footer
+{	
+	color: #fd95ff;
+	font-size: 17px;
+}
+#f0
+{
+	font-size: 19px;
+}
+#heading
+{
+	color: #FFA900;
+}
+#wrapper
+{
+	background-color: #FFFF35;
+	border-right: 8px;
+	border-left: 8px;
+	border-top: 0px;
+	border-bottom: 0px;
+	border-left: 8px;
+	border-style: solid;
+	border-color: #888888;
+	width:1535px;
+	padding:30px;
+	text-align: left;
+	margin:0 auto;
+}
+.main
+{
+}
+
+a {
+	color: #00FFA9;
+	text-decoration: none;
+	font-size: 160%;
+	font-weight: bold;
+}
+.scrollingWindow
+{
+    width:1530px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+h1
+{
+	text-align:left;
+	font-size:xx-large;
+	color: #fc7aff;
+}
+h1:hover {
+	cursor: pointer;
+}
+.hashtag
+{
+	font-size:large;
+	font-weight: bold;
+	color:#00FFA9;
+}
+.textColumn{
+	height: 558px;
+	overflow-y: hidden;
+}
+td{
+	padding-right: 14px;
+	text-align:justify;
+	vertical-align:top
+}
+img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"]
+{
+	display=none;
+}
+#play{	
+	position: relative;
+	top: -292px;
+	left: 436px;
+}
+input{
+	font-size: 110%;
+}
+#find{
+	font-size: 19px; 
+}
