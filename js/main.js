@@ -86,7 +86,7 @@ function renderPage()
 				<br><br>`;
 		}
 		if(article[0]=='ad')
-			document.getElementById("content").innerHTML += "<div style='background-color:#00FFA9; border-radius:10px;'>"+a+"</div>";
+			document.getElementById("content").innerHTML += "<div class='banner_ad' style='background-color:#00FFA9; border-radius:10px;'>"+a+"</div>";
 		else
 			document.getElementById("content").innerHTML += a;
 	}
