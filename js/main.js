@@ -75,10 +75,11 @@ function renderPage()
 					</td>
 				</tr>
 			</table>
-			<br><br>
-			<div class="scrollingWindow">`;
+			<br>`;
 		if(article[3]!="0-20")
 		{
+			a+=`<br>
+			<div class="scrollingWindow">`;
 			for(var i = 1; i <= images.split("-")[1] ;i++)
 				a += `<img width="200" height="200" src="i/`+images.split("-")[0]+`-`+i+`.jpg"/>`;
 			a+=`</div>
