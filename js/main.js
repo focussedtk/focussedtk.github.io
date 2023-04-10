@@ -44,7 +44,9 @@ function renderPage()
 	document.getElementById("content").innerHTML ="";
 	var articles = fileZ.split('\n');
 	articlesLength = articles.length;
-	for(var articleNum = 1 ; articleNum < articles.length;articleNum++)
+	if(articlesLength>20)
+		articlesLength=20;
+	for(var articleNum = 1 ; articleNum < articlesLength;articleNum++)
 	{
 		var article = articles[articleNum].split(",");
 		document.getElementById("content").innerHTML+="";
