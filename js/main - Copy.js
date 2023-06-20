@@ -3,9 +3,7 @@ var numFiles = 0;
 var thumbnailUrls = [];
 var embedUrls = []; 
 var articlesLength = 0;
-var maxArticlesPerPage = 10;
 var previousPage;
-var pageNum =1;
 	
 function gotoPage(page)
 {
@@ -45,14 +43,10 @@ function renderPage()
 {
 	document.getElementById("content").innerHTML ="";
 	var articles = fileZ.split('\n');
-	articles.shift();
-	pageNum = 1;
-	if(window.location.href.includes("?page="))
-		pageNum =  parseInt(window.location.href.split("?page=")[1]);
 	articlesLength = articles.length;
-	if(articlesLength>maxArticlesPerPage)
-		articlesLength=maxArticlesPerPage;
-	for(var articleNum = (pageNum-1)*maxArticlesPerPage ; articleNum < (pageNum-1)*maxArticlesPerPage+maxArticlesPerPage;articleNum++)
+	if(articlesLength>20)
+		articlesLength=20;
+	for(var articleNum = 1 ; articleNum < articlesLength;articleNum++)
 	{
 		var article = articles[articleNum].split(",");
 		document.getElementById("content").innerHTML+="";
@@ -83,7 +77,6 @@ function renderPage()
 					</td>
 				</tr>
 			</table>
-			
 			<br>`;
 		if(article[3]!="0-20")
 		{
@@ -99,12 +92,6 @@ function renderPage()
 		else
 			document.getElementById("content").innerHTML += a;
 	}
-	var b =
-	`<div style="overflow: hidden;">
-	  <div style="float: left;"><a href="?page=`+(pageNum-1)+`">&nbsp;previous</a></div>
-	  <div style="float: right;"><a href="?page=`+(pageNum+1)+`">next&nbsp;</a></div>
-	</div>`;
-	document.getElementById("content").innerHTML +=  b;
 }
 function checkImage(event,aN)
 {
