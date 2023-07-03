@@ -5,6 +5,37 @@
 	<link rel="stylesheet" href="/mystyle.css">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<script src="/js/scale.js"></script>
+	<style>
+			.confetti-container {
+			  position: fixed;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100%;
+			  overflow: hidden;
+			  pointer-events: none;
+			}
+
+			.confetti {
+			  position: absolute;
+			  width: 10px;
+			  height: 10px;
+			  border-radius: 50%;
+			  opacity: 0.8;
+			  pointer-events: none;
+			  animation: confetti-fall linear infinite;
+			}
+
+			@keyframes confetti-fall {
+			  0% {
+				transform: translateY(-100%);
+			  }
+			  100% {
+				transform: translateX(140vh);
+				transform: translateY(160vh);
+			  }
+			}
+		</style>
 </head>
 <body>
 	<div id="wrapper2">
@@ -58,6 +89,26 @@
 	</div>
 </body>
 <script>
+function createConfetti() {
+  // Create a container for the confetti
+  const container = document.createElement('div');
+  container.classList.add('confetti-container');
+  document.body.appendChild(container);
+
+  // Define the confetti colors
+  const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+  // Create confetti pieces
+  for (let i = 0; i < 160; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.animationDelay = `${Math.random() * 5}s`;
+    confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+    container.appendChild(confetti);
+  }
+}
+
 var fileZ;
 var numFiles = 0;
 var thumbnailUrls = [];
@@ -77,8 +128,11 @@ function gotoPage(page)
 		document.body.style.backgroundColor = "#84FFF9";
 	if(previousPage!=null)
 		document.getElementById("_"+previousPage).style.textDecoration = "none";
-	document.getElementById("_"+page).style.textDecoration = "underline";
+	//document.getElementById("_"+page).style.textDecoration = "underline";
 	previousPage = page;
+	
+	// Call the function to create confetti
+	createConfetti();
 }
 function readTextFile(file)
 {
@@ -153,11 +207,15 @@ function checkImage(event,aN)
 		document.getElementById("i"+aN).style = 'height: 528px;  object-fit: cover; ';
 	}
 }
-gotoPage('awards');
+gotoPage('/awards');
 function play(element,id)
 {
 	element.innerHTML=embedUrls[id];
 }
+
+
+
+
 </script>
 </html>
 
