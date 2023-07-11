@@ -55,6 +55,8 @@ function renderPage()
 	for(var articleNum = (pageNum-1)*maxArticlesPerPage ; articleNum < (pageNum-1)*maxArticlesPerPage+maxArticlesPerPage;articleNum++)
 	{
 		var article = articles[articleNum].split(",");
+		if(article[1] == undefined)
+			break;
 		document.getElementById("content").innerHTML+="";
 		var title = article[1];
 		var url = article[2];
@@ -99,11 +101,12 @@ function renderPage()
 		else
 			document.getElementById("content").innerHTML += a;
 	}
-	var b =
-	`<div style="overflow: hidden;">
-	  <div style="float: left;"><a href="?page=`+(pageNum-1)+`">&nbsp;previous</a></div>
-	  <div style="float: right;"><a href="?page=`+(pageNum+1)+`">next&nbsp;</a></div>
-	</div>`;
+	var b =	`<div style="overflow: hidden;">`;
+	if(pageNum-1>0)
+		b+=`<div style="float: left;"><a href="?page=`+(pageNum-1)+`">&nbsp;previous</a></div>`;
+	if(article[1] != undefined)
+		b+=`<div style="float: right;"><a href="?page=`+(pageNum+1)+`">next&nbsp;</a></div>`;
+	b+=`</div>`;
 	document.getElementById("content").innerHTML +=  b;
 }
 function checkImage(event,aN)
